@@ -21,6 +21,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 5px;
 }
 
 form input, 
@@ -29,6 +30,7 @@ form button {
     font-size: 2rem;
     border: none;
     background: azure;
+    border-radius: 10px;
 }
 
 form button {
@@ -41,4 +43,70 @@ form button {
 form button:hover{
     color: azure;
     background: #3879ef; 
+}
+
+
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.todo-list {
+    min-width: 40%;
+    list-style: none;
+}
+
+.todo {
+    display: flex; 
+    margin: 0.5rem;
+    color: #040f23;
+    background-color: rgba(240, 255, 255, 0.549);
+    font-family: 'Emilys Candy';
+    font-size: 1.8rem;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.todo li {
+    /* To push all items to the side */
+    flex: 1;
+}  
+
+.trash-btn, .complete-btn{
+    background: none;
+    color: #3878efbe;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    
+} 
+
+.trash-btn:hover, 
+.complete-btn:hover{
+    color: #3879ef;
+    transition: all 0.5s ease;
+}
+/* If needed to overwrite one of the styles above we can redefine it again */
+
+
+.todo-item {
+    padding: 0.5rem 0.5rem;
+    margin-right: 1rem;
+}
+
+.fa-trash,
+.fa-check {
+    pointer-events: none;
+}
+
+.completed {
+     text-decoration: line-through;
+     opacity: 0.5;
 }
