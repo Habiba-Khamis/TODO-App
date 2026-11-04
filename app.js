@@ -8,7 +8,7 @@ const todoList = document.querySelector(".todo-list");
 // Adding clicking event to the button
 todoButton.addEventListener('click', addTodo);
 // Adding deletion functionality
-todoButton.addEventListener('click', deleteCheck);
+todoList.addEventListener('click', deleteCheck);
 
 // Functions
 // A function to add a new todo item
@@ -48,3 +48,26 @@ function addTodo(event) {
     todoInput.value= '';
 }
 
+function deleteCheck(event) {
+    // Grab the icon that we're clicking on
+    const item = event.target;
+
+    // Deleting
+    if (item.classList[0] === "trash-btn"){
+        // Deleting the parent element of the element that we're clicking on
+        // Adding transition before deleting
+        const itemToDelete = item.parentElement;
+        itemToDelete.classList.add("fall");
+
+        // It wait until the transition ends then it execute the function
+        todoList.addEventListener('transitionend', function(){
+            itemToDelete.remove()
+        })
+    }
+
+    // Click the check mark to mark as completed
+    if (item.classList[0] === "complete-btn"){
+        const itemToCheck = item.parentElement;
+        itemToCheck.classList.toggle("completed");
+    }
+}
