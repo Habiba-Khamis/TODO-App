@@ -32,6 +32,9 @@ function addTodo(event) {
     // Add the todo to the todoDiv
     todoDiv.appendChild(newTodo);
 
+    // Add to the local storage and before we clear up the todo input value
+    saveToLocalStorage(todoInput.value);
+
     // The completed button
     const completedButton = document.createElement('button');
     completedButton.classList.add("complete-btn");
@@ -101,4 +104,20 @@ function filterTodo(event) {
                 break;
         }   
     })
+}
+// Adding todos to local storage
+function saveToLocalStorage(todo) {
+    let todos;
+    // CHECK --- HEY Do I already have things here?
+    if (localStorage.getItem("todos") === null ){
+        todos = [];
+    } else {
+        // If not empty show them after parsing them to an array
+        todos = localStorage.getItem(JSON.parse("todos"));
+    }
+
+    // Add the new todo that we created to the list
+    todos.push(todo);
+    // Stringify the todos to save it to the local storage
+    localStorage.setItem(JSON.stringify(todos), todo);
 }
