@@ -6,6 +6,8 @@ const todoList = document.querySelector(".todo-list");
 const filterOptions = document.querySelector(".todo-filter");
 
 // Event Listeners
+// Update the UI when the DOM content is loaded
+document.addEventListener('DOMContentLoaded', getTodos);
 // Adding clicking event to the button
 todoButton.addEventListener('click', addTodo);
 // Adding deletion functionality
@@ -26,7 +28,7 @@ function addTodo(event) {
 
     // Create the todo item
     const newTodo = document.createElement('li');
-    newTodo.classList.add("todo-item");
+    newTodo.classList.add("todo-item"); 
     // Change the content of it to have the value of the text input
     newTodo.innerText = todoInput.value;
     // Add the todo to the todoDiv
@@ -54,6 +56,7 @@ function addTodo(event) {
     todoInput.value= '';
 }
 
+// This deletion functionality is not deleting from the local storage
 function deleteCheck(event) {
     // Grab the icon that we're clicking on
     const item = event.target;
@@ -105,19 +108,60 @@ function filterTodo(event) {
         }   
     })
 }
-// Adding todos to local storage
-function saveToLocalStorage(todo) {
+
+// Checking if the local storage contains data (A function with repetitive usage)
+function checkLocalStorage() {
     let todos;
     // CHECK --- HEY Do I already have things here?
-    if (localStorage.getItem("todos") === null ){
+    if (localStorage.getItem("todos") === null){
         todos = [];
     } else {
-        // If not empty show them after parsing them to an array
-        todos = localStorage.getItem(JSON.parse("todos"));
+        todos = JSON.parse(localStorage.getItem("todos"));
     }
+    return todos;
+}
 
+// Adding todos to local storage
+function saveToLocalStorage(todo) {
+    
+    let storageTodos = checkLocalStorage();
     // Add the new todo that we created to the list
-    todos.push(todo);
+    storageTodos.push(todo);
     // Stringify the todos to save it to the local storage
-    localStorage.setItem(JSON.stringify(todos), todo);
+    localStorage.setItem("todos", JSON.stringify(storageTodos));
+}
+
+// A function to render the todos item on the screen to be able to retain the items when we close and reopen the app
+function getTodos() {
+    // Check the storage
+    let storageTodos = checkLocalStorage();
+ 
+   // Loop through the todos in the storage 
+   // The function take each todo in the local storage to loop over it and then pass it to the inner text of the newTodo
+   storageTodos.forEach(function(todo){
+        // Create the todo items
+        // 1. the Div
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add("todo");
+
+        // 2. the li
+        const newTodo = document.createElement('li');
+        newTodo.classList.add("todo-item");
+        // Updating the inner text (using the local storage)
+        newTodo.innerText = todo;
+        todoDiv.appendChild(newTodo);
+
+        // 3. the add buttons of the todo item
+        const completedButton = document.createElement('button');
+        completedButton.classList.add("complete-btn");
+        completedButton.innerHTML = '<li class="fas fa-check"></li>';
+        todoDiv.appendChild(completedButton);
+
+        const trashButton = document.createElement('button');
+        trashButton.classList.add("trash-btn");
+        trashButton.innerHTML = '<li class="fas fa-trash"></li>';
+        todoDiv.appendChild(trashButton);
+
+        todoList.appendChild(todoDiv);
+   })
 }
