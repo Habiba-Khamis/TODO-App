@@ -9,3 +9,5 @@ A simple To-Do app in vanilla JavaScript.
 ## Features
 - Add your todo list and save them to local storage.
 - Delete and check the todos.
+
+![alt text](image.png)
