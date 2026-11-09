@@ -68,6 +68,9 @@ function deleteCheck(event) {
         const itemToDelete = item.parentElement;
         itemToDelete.classList.add("fall");
 
+        // Call the deletion function
+        removeTodoFromStorage(itemToDelete);
+
         // It wait until the transition ends then it execute the function
         todoList.addEventListener('transitionend', function(){
             itemToDelete.remove()
@@ -164,4 +167,17 @@ function getTodos() {
 
         todoList.appendChild(todoDiv);
    })
+}
+
+// Delete from the local storage
+function removeTodoFromStorage(todo) {
+    // To delete, we first check the storage
+    let savedTodos = checkLocalStorage();
+
+    // Second get the index of the item and delete it
+    let todoIndex = todo.children[0].innerText;
+    savedTodos.splice(todoIndex.indexOf(todoIndex, 1));
+
+    // Set it back to the storage
+    localStorage.setItem("todos", JSON.stringify(savedTodos));
 }
