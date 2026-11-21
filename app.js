@@ -88,7 +88,7 @@ function deleteCheck(event) {
 function filterTodo(event) {
     // Grab all todos from the list
     const todos = Array.from(todoList.children);
-    // Loop through the list using `forEach` because we're using the nodes
+    // Loop through the list using `forEach` 
     todos.forEach(function(todo) {
         switch (event.target.value) {
             case "all":
